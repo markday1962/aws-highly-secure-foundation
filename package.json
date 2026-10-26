@@ -1,0 +1,15 @@
+{
+	"name": "aws-secure-foundation",
+	"private": true,
+	"workspaces": [
+		"network",
+		"account-baseline"
+	],
+	"scripts": {
+		"build": "npm run build --workspaces",
+		"test": "npm test --workspaces"
+	},
+	"engines": {
+		"node": ">=20"
+	}
+}

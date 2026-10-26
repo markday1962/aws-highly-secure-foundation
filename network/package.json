@@ -1,0 +1,17 @@
+{
+	"name": "secure-foundation-network",
+	"private": true,
+	"main": "index.ts",
+	"scripts": {
+		"build": "tsc",
+		"test": "tsc && node --test bin/test/*.test.js"
+	},
+	"dependencies": {
+		"@pulumi/aws": "^7.0.0",
+		"@pulumi/pulumi": "^3.150.0"
+	},
+	"devDependencies": {
+		"@types/node": "^20.19.0",
+		"typescript": "^5.9.2"
+	}
+}

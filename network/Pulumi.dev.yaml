@@ -1,0 +1,70 @@
+config:
+  aws:region: eu-west-1
+  # The account this stack may deploy to. Any other credentials are refused.
+  # Placeholder: replace with your sandbox account ID.
+  aws:allowedAccountIds:
+    - "111111111111"
+  aws:defaultTags:
+    tags:
+      project: aws-secure-foundation
+      stack: network
+      environment: dev
+      managed-by: pulumi
+
+  secure-foundation-network:vpcCidr: 10.0.0.0/16
+  secure-foundation-network:availabilityZones:
+    - eu-west-1a
+    - eu-west-1b
+    - eu-west-1c
+  # "single" = one NAT shared by all AZs. "perAz" = one per AZ (survives an AZ outage).
+  secure-foundation-network:natGateways: perAz
+  secure-foundation-network:appPort: 8443
+  secure-foundation-network:dataPorts:
+    - 5432
+
+  # Domains workloads may resolve (DNS Firewall) and connect to (Network
+  # Firewall). Each entry includes its subdomains. Add what your apps need,
+  # e.g. registry.npmjs.org or pypi.org.
+  secure-foundation-network:allowedDomains:
+    - amazonaws.com
+
+  # ~$865/month for 3 AZs plus $0.065/GB processed.
+  secure-foundation-network:networkFirewall: true
+  # AWS managed rule groups, strict-order variants, checked before the domain
+  # allow-list. Names from the AWS Network Firewall developer guide. If
+  # `pulumi up` reports the policy is over capacity, remove some.
+  secure-foundation-network:networkFirewallManagedRuleGroups:
+    - AbusedLegitMalwareDomainsStrictOrder
+    - MalwareDomainsStrictOrder
+    - AbusedLegitBotNetCommandAndControlDomainsStrictOrder
+    - BotNetCommandAndControlDomainsStrictOrder
+    - ThreatSignaturesBotnetStrictOrder
+    - ThreatSignaturesBotnetWebStrictOrder
+    - ThreatSignaturesMalwareStrictOrder
+    - ThreatSignaturesMalwareWebStrictOrder
+    - ThreatSignaturesMalwareCoinminingStrictOrder
+    - ThreatSignaturesEmergingEventsStrictOrder
+    - ThreatSignaturesIOCStrictOrder
+    - ThreatSignaturesPhishingStrictOrder
+
+  secure-foundation-network:dnsFirewall: true
+  # IDs of the AWS managed DNS Firewall domain lists to block (malware,
+  # botnet C2, aggregate threat list, GuardDuty threat list). They differ by
+  # region; see the README for the command that lists them.
+  secure-foundation-network:dnsFirewallManagedListIds: []
+
+  # Interface endpoints (~$8/month each per AZ). ssm, ssmmessages and
+  # ec2messages give Session Manager shell access with no SSH and no bastion.
+  secure-foundation-network:interfaceEndpoints:
+    - ssm
+    - ssmmessages
+    - ec2messages
+    - sts
+    - kms
+    - logs
+    - secretsmanager
+    - ecr.api
+    - ecr.dkr
+    - sqs
+
+  secure-foundation-network:logRetentionDays: 365
