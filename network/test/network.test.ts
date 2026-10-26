@@ -24,7 +24,7 @@ pulumi.runtime.setMocks(
 		},
 		call: (args) => args.inputs,
 	},
-	"secure-foundation-network",
+	"highly-secure-foundation-network",
 	"test",
 	false,
 );

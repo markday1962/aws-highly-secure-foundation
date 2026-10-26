@@ -1,4 +1,4 @@
-# aws-secure-foundation
+# aws-highly-secure-foundation
 
 A Pulumi (TypeScript) learning project that builds a VPC in **eu-west-1**
 following the
@@ -6,7 +6,7 @@ following the
 with every optional control switched on.
 
 ```
-aws-secure-foundation/
+aws-highly-secure-foundation/
 ├── account-baseline/   once per account: CloudTrail, GuardDuty, Security Hub, Config, account hardening
 ├── network/            the four-tier VPC, firewalls, endpoints and logging
 ├── package.json        npm workspaces root

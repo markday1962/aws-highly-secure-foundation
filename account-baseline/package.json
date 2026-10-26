@@ -1,5 +1,5 @@
 {
-	"name": "secure-foundation-account-baseline",
+	"name": "highly-secure-foundation-account-baseline",
 	"private": true,
 	"main": "index.ts",
 	"scripts": {

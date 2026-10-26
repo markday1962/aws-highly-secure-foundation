@@ -13,7 +13,7 @@ pulumi.runtime.setMocks(
 		},
 		call: (args) => args.inputs,
 	},
-	"secure-foundation-account-baseline",
+	"highly-secure-foundation-account-baseline",
 	"test",
 	false,
 );
