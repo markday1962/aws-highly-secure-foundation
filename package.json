@@ -1,5 +1,5 @@
 {
-	"name": "aws-highly-secure-foundation",
+	"name": "aws-highly-secure-foundation-pulumi",
 	"private": true,
 	"workspaces": [
 		"network",

@@ -6,7 +6,7 @@ config:
     - "111111111111"
   aws:defaultTags:
     tags:
-      project: aws-highly-secure-foundation
+      project: aws-highly-secure-foundation-pulumi
       stack: network
       environment: dev
       managed-by: pulumi
