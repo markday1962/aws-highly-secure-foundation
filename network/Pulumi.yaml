@@ -1,6 +1,6 @@
 name: highly-secure-foundation-network
 description: Learning project - a hardened four-tier VPC following the Well-Architected security pillar
 runtime:
-  name: nodejs
+  name: python
   options:
-    packagemanager: npm
+    toolchain: uv

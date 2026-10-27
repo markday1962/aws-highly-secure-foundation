@@ -1,6 +1,6 @@
 # aws-highly-secure-foundation-pulumi
 
-A Pulumi (TypeScript) learning project that builds a VPC in **eu-west-1**
+A Pulumi (Python) learning project that builds a VPC in **eu-west-1**
 following the
 [AWS Well-Architected security pillar](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html),
 with every optional control switched on.
@@ -9,9 +9,12 @@ with every optional control switched on.
 aws-highly-secure-foundation-pulumi/
 ├── account-baseline/   once per account: CloudTrail, GuardDuty, Security Hub, Config, account hardening
 ├── network/            the four-tier VPC, firewalls, endpoints and logging
-├── package.json        npm workspaces root
-└── tsconfig.base.json
+└── Makefile            install, test and lint both projects
 ```
+
+Each project is its own [uv](https://docs.astral.sh/uv/) project: a
+`pyproject.toml`, a `__main__.py` entry point, the components in `src/` and
+pytest tests in `tests/`.
 
 There are two projects because they have different lifecycles. The account
 baseline should outlive any VPC, so `pulumi destroy` on the network must never
@@ -74,7 +77,7 @@ allow-list. AWS API calls skip the internet entirely through VPC endpoints.
 2. **Deploy `account-baseline` first.** GuardDuty, Security Hub, AWS Config and
    the Access Analyzer allow only one of each per region. If the account
    already has any of them, creation fails: `pulumi import` the existing one,
-   or remove it from `src/detection.ts`.
+   or remove it from `src/detection.py`.
 3. **Extend `allowedDomains`** in `network/Pulumi.dev.yaml` with everything
    your workloads must reach (package registries, SaaS APIs). Anything not on
    it fails DNS resolution and is dropped by the firewall. This is intended,
@@ -89,9 +92,12 @@ allow-list. AWS API calls skip the internet entirely through VPC endpoints.
 
 ## Running it
 
+Needs Python 3.12+ and [uv](https://docs.astral.sh/uv/).
+
 ```sh
-npm install
-npm test                                  # 29 unit tests across both projects, no AWS needed
+make install                              # a .venv in each project
+make test                                 # 29 unit tests across both projects, no AWS needed
+make lint                                 # ruff and pyright
 
 pulumi login --local                      # local state while learning
 export AWS_PROFILE=<sandbox profile>
